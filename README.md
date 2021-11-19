@@ -22,4 +22,6 @@ Python:
  There are three different solvers available: the "Standard" files corresponds to the original and standard formulation; the "Inexact" files corresponds to the original formulations adjusted to incorporate inexact flow constraints and the "Subpath" files corresponds to the original formulations with the addition to the subpath constraints.
  
  # Running the solvers;
- In each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. As reminder, all the input files are in Catfish format. See folder "Example" for sample of inputs.
+ In each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
+
+As reminder, all the input files are in Catfish format. See folder "Example" for sample of inputs.
