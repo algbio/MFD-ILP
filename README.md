@@ -25,3 +25,7 @@ Python:
  In each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
 
 As reminder, all the input files are in Catfish format. See folder "Example" for sample of inputs.
+
+ # Outputs
+ Each solvers outputs 2 files: the first file called "results_[CPLEX or Gurobi].txt" contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called "results_[CPLEX or Gurobi]-details.txt" contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
+ 
