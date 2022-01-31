@@ -1,4 +1,5 @@
-# ILP solvers for Minimum Flow Decomposition
+# ILP solvers for Minimum Flow Decomposition, and variants
+
 This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper:
 
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Fast, Flexible, and Exact Minimum Flow Decompositions via ILP**, To appear in the Proceedings of **RECOMB 2022** - 26th Annual International Conference on Research in Computational Molecular Biology, 2022, [**Full version**](https://arxiv.org/abs/2201.10923).
