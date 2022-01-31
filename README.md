@@ -44,7 +44,7 @@ As reminder, all the input files are in Catfish format. See folder "Example" for
 Run the solver as:
 
 ```
-python3 mfd-solver-gurobi.py [-h] [-wt WEIGHTTYPE] [-t THREADS] -i INPUT -o OUTPUT
+python3 mfd-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
 
 required arguments:
   -i INPUT, --input INPUT
@@ -61,10 +61,10 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE**: Check `standalone/example.graph` for an example input graph. Note that as opposed to the Jupyter notebooks, the stand-alone solver cannot read more graphs from the input file. Encode only a single graph in the input file.
+**NOTE**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
 
 Example usage:
 
 ```
-python3 standalone/mfd-solver-gurobi.py --input standalone/example.graph --output standalone/example.out
+python3 standalone/mfd-solver-gurobi.py -i standalone/example.graph -o standalone/example.out
 ```
