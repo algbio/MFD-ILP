@@ -76,7 +76,7 @@ python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalo
 
 ## 2.2 Example input / output
 
-The flow in the above figure (left) can be encoded as (`6` is the number of nodes)
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
 
 ```
 6
