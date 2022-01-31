@@ -39,7 +39,9 @@ As reminder, all the input files are in Catfish format. See folder "Example" for
  ## 1.5 Outputs
  Each solvers outputs 2 files: the first file called "results_[CPLEX or Gurobi].txt" contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called "results_[CPLEX or Gurobi]-details.txt" contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
 
- # 2. Stand-alone solver for standard MFD
+# 2. Stand-alone solver for standard MFD
+
+## 2.1 Running
 
 Run the solver as:
 
@@ -61,10 +63,36 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+**NOTE 1**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+
+**NOTE 2**: This graph format does not support parallel edges. If your graph has such, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
 ```
 python3 standalone/mfd-solver-gurobi.py -i standalone/example.graph -o standalone/example.out
+```
+
+## 2.2 Example input / output
+
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes)
+
+```
+6
+s a 6
+s b 7
+a b 2
+a c 4
+b c 9
+c d 6
+c t 7
+d t 6
+```
+
+Its minimum flow decomposition in the figure (right) will be output as:
+
+```
+4 ['s', 'a', 'c', 'd', 't']
+2 ['s', 'a', 'b', 'c', 'd', 't']
+7 ['s', 'b', 'c', 't']
 ```
