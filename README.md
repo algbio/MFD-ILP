@@ -97,3 +97,11 @@ Its minimum flow decomposition in the figure (right) will be output as:
 2 ['s', 'a', 'b', 'c', 'd', 't']
 7 ['s', 'b', 'c', 't']
 ```
+
+## 2.3 Installing Gurobi
+
+Download the solver from [www.gurobi.com](www.gurobi.com), activate the (academic) license as instructed, and then install the Python API with:
+
+```
+pip3 install gurobipy
+```
