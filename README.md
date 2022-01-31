@@ -9,7 +9,7 @@ In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with u
 
 For all MFD variants described in the paper above, we provide Jupyter notebooks (folder `notebooks`) implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
 
-In addition, since standard MFD is more used, for it we proved a slightly more efficient stand-alone Python script (folder `standalone`), using the Gurobi API.
+In addition, for standard MFD we provide a slightly more efficient stand-alone solver (folder `standalone`), which uses the Gurobi API.
 
 # 1. Jupyter notebooks
 
