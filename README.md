@@ -65,7 +65,7 @@ optional arguments:
 
 **NOTE 1**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
 
-**NOTE 2**: This graph format does not support parallel edges. If your graph has such, subdivide them (i.e. replace them with a path of two edges).
+**NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
