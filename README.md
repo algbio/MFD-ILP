@@ -70,7 +70,7 @@ optional arguments:
 Example usage:
 
 ```
-python3 standalone/mfd-solver-gurobi.py -i standalone/example.graph -o standalone/example.out
+python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalone/example2.out
 ```
 
 ## 2.2 Example input / output
