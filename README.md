@@ -1,15 +1,15 @@
-# MFD-ILP
-This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper
+# ILP solvers for Minimum Flow Decomposition
+This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper:
 
-> Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Fast, Flexible, and Exact Minimum Flow Decompositions via ILP**, To appear in the proceedings for RECOMB 2022 - 26th Annual International Conference on Research in Computational Molecular Biology, 2022, [full version](https://arxiv.org/abs/2201.10923).
+> Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Fast, Flexible, and Exact Minimum Flow Decompositions via ILP**, To appear in the Proceedings of **RECOMB 2022** - 26th Annual International Conference on Research in Computational Molecular Biology, 2022, [**Full version**](https://arxiv.org/abs/2201.10923).
 
 In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with unique source *s* and unique sink *t*, and we need to decompose it into the minimum number of weighted paths (usually the weights are positive integers) from *s* to *t*, such that the weights of the paths sum up to the flow values, for every edge. In the image below, the flow is decomposable into 3 weighted paths, and this number is minimum.
 
-![MFD Example](https://github.com/MFD-ILP/) 
+![MFD Example](https://github.com/algbio/MFD-ILP/raw/main/mfd-example.png) 
 
 For all MFD variants described in the paper above, we provide Jupyter notebooks (folder `notebooks`) implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
 
-In addition, since standard MFD is more used, for it we proved a slightly more efficient stand-alone Python script (folder `standalone`), using the Gurobi API.
+In addition, for standard MFD we provide a slightly more efficient stand-alone solver (folder `standalone`), which uses the Gurobi API.
 
 # 1. Jupyter notebooks
 
@@ -39,12 +39,14 @@ As reminder, all the input files are in Catfish format. See folder "Example" for
  ## 1.5 Outputs
  Each solvers outputs 2 files: the first file called "results_[CPLEX or Gurobi].txt" contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called "results_[CPLEX or Gurobi]-details.txt" contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
 
- # Stand-alone solver for standard MFD
+# 2. Stand-alone solver for standard MFD
+
+## 2.1 Running
 
 Run the solver as:
 
 ```
-python3 mfd-solver-gurobi.py [-h] [-wt WEIGHTTYPE] [-t THREADS] -i INPUT -o OUTPUT
+python3 mfd-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
 
 required arguments:
   -i INPUT, --input INPUT
@@ -61,10 +63,36 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE**: Check `standalone/example.graph` for an example inout graph. Note that as opposed to the Jupyter notebooks, the stand alone solver cannot read more graphs from the input file. Encode only a single graph in the input file.
+**NOTE 1**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+
+**NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
 ```
-python3 standalone/mfd-solver-gurobi.py --input standalone/example.graph --output standalone/example.out
+python3 standalone/mfd-solver-gurobi.py -i standalone/example.graph -o standalone/example.out
+```
+
+## 2.2 Example input / output
+
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes)
+
+```
+6
+s a 6
+s b 7
+a b 2
+a c 4
+b c 9
+c d 6
+c t 7
+d t 6
+```
+
+Its minimum flow decomposition in the figure (right) will be output as:
+
+```
+4 ['s', 'a', 'c', 'd', 't']
+2 ['s', 'a', 'b', 'c', 'd', 't']
+7 ['s', 'b', 'c', 't']
 ```
