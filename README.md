@@ -1,4 +1,5 @@
-# ILP solvers for Minimum Flow Decomposition
+# Fast and exact ILP-based solvers for the Minimum Flow Decomposition problem, and variants of it
+
 This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper:
 
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Fast, Flexible, and Exact Minimum Flow Decompositions via ILP**, To appear in the Proceedings of **RECOMB 2022** - 26th Annual International Conference on Research in Computational Molecular Biology, 2022, [**Full version**](https://arxiv.org/abs/2201.10923).
@@ -26,18 +27,18 @@ Python:
  Jupyter Notebook
  
  ## 1.2 Inputs
- For each solver, an example of the inputs are available in "Example" folder. 
+ For each solver, examples of the inputs are available in `Example` folder.
  
  ## 1.3 Different Formulations
- There are three different solvers available: the "Standard" files corresponds to the original and standard formulation; the "Inexact" files corresponds to the original formulations adjusted to incorporate inexact flow constraints and the "Subpath" files corresponds to the original formulations with the addition to the subpath constraints.
+There are three different solvers available: the "Standard" files corresponds to the original and standard formulation; the "Inexact" files corresponds to the original formulations adjusted to incorporate inexact flow constraints and the "Subpath" files corresponds to the original formulations with the addition to the subpath constraints.
  
  ## 1.4 Running the solvers
- In each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
+ For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
 
-As reminder, all the input files are in Catfish format. See folder "Example" for sample of inputs.
+As reminder, all the input files are in [Catfish](https://github.com/Kingsford-Group/catfishtest) format. See folder `Example` for sample of inputs.
 
  ## 1.5 Outputs
- Each solvers outputs 2 files: the first file called "results_[CPLEX or Gurobi].txt" contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called "results_[CPLEX or Gurobi]-details.txt" contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
+ Each solver outputs two files: the first file called `results_[CPLEX or Gurobi].txt` contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called `results_[CPLEX or Gurobi]-details.txt` contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
 
 # 2. Stand-alone solver for standard MFD
 
@@ -63,19 +64,19 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE 1**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+**NOTE 1**: Check `standalone/example1.graph` and `standalone/example2.graph` for an example input graphs. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
 
 **NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
 ```
-python3 standalone/mfd-solver-gurobi.py -i standalone/example.graph -o standalone/example.out
+python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalone/example2.out
 ```
 
 ## 2.2 Example input / output
 
-The flow in the above figure (left) can be encoded as (`6` is the number of nodes)
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
 
 ```
 6
@@ -95,4 +96,12 @@ Its minimum flow decomposition in the figure (right) will be output as:
 4 ['s', 'a', 'c', 'd', 't']
 2 ['s', 'a', 'b', 'c', 'd', 't']
 7 ['s', 'b', 'c', 't']
+```
+
+## 2.3 Installing Gurobi
+
+Download the solver from [www.gurobi.com](www.gurobi.com), activate the (academic) license as instructed, and then install the Python API with:
+
+```
+pip3 install gurobipy
 ```
