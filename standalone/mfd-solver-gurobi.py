@@ -5,6 +5,9 @@ from gurobipy import GRB
 import math
 import os
 
+## This lower bound assumes that there are no edges with flow zero.
+## If there are, then it has to be changed to equal 
+## the number of in-/out-neighbors with non-zero flow.
 def lower_bound_degree(neighbors):
     
     max_deg = 1
