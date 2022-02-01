@@ -1,4 +1,4 @@
-# Fast and exact ILP-based solvers for the Minimum Flow Decomposition problem, and variants of it.
+# Fast and exact ILP-based solvers for the Minimum Flow Decomposition problem, and variants of it
 
 This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper:
 
@@ -64,7 +64,7 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE 1**: Check `standalone/example.graph` for an example input graph. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+**NOTE 1**: Check `standalone/example1.graph` and `standalone/example2.graph` for an example input graphs. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
 
 **NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
