@@ -74,9 +74,11 @@ Example usage:
 python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalone/example2.out
 ```
 
-## 2.4 Stand-alone solver of MFD variants
+## 2.2 Stand-alone solver of MFD variants
 
-# For inexact formulation, run the solver as:
+### 2.2.1 For inexact formulation:
+
+Run the solver as:
 
 ```
 python3 mfd-inexact-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
@@ -96,7 +98,9 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-# For subpath formulation, run the solver as:
+### 2.2.2 For subpath formulation:
+
+Run the solver as:
 
 ```
 python3 mfd-subpath-solver-gurobi.py -i INPUT -s SUBPATHS -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
