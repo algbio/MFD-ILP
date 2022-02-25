@@ -74,7 +74,53 @@ Example usage:
 python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalone/example2.out
 ```
 
-## 2.2 Example input / output
+## 2.4 Stand-alone solver of MFD variants
+
+# For inexact formulation, run the solver as:
+
+```
+python3 mfd-inexact-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
+
+required arguments:
+  -i INPUT, --input INPUT
+                        Input filename
+  -o OUTPUT, --output OUTPUT
+                        Output filename
+
+optional arguments:
+  -wt WEIGHTTYPE, --weighttype WEIGHTTYPE
+                        Type of path weights (default int+):
+                           int+ (positive non-zero ints), 
+                           float+ (positive non-zero floats).
+  -t THREADS, --threads THREADS
+                        Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
+```
+
+# For subpath formulation, run the solver as:
+
+```
+python3 mfd-subpath-solver-gurobi.py -i INPUT -s SUBPATHS -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
+
+required arguments:
+  -i INPUT, --input INPUT
+                        Input filename
+  -s SUBPATHS, --input SUBPATHS
+                        Subpaths filename
+  -o OUTPUT, --output OUTPUT
+                        Output filename
+
+optional arguments:
+  -wt WEIGHTTYPE, --weighttype WEIGHTTYPE
+                        Type of path weights (default int+):
+                           int+ (positive non-zero ints), 
+                           float+ (positive non-zero floats).
+  -t THREADS, --threads THREADS
+                        Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
+```
+
+## 2.3 Example input / output
+
+# For the standard formulation:
 
 The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
 
@@ -98,7 +144,7 @@ Its minimum flow decomposition in the figure (right) will be output as:
 7 ['s', 'b', 'c', 't']
 ```
 
-## 2.3 Installing Gurobi
+## 2.4 Installing Gurobi
 
 Download the solver from [www.gurobi.com](www.gurobi.com), activate the (academic) license as instructed, and then install the Python API with:
 
