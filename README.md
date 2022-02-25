@@ -193,7 +193,7 @@ With subpath files:
 2
 s a b 
 a c
-``
+```
 
 
 Its minimum flow decomposition in the figure (right) will be output as:
