@@ -124,7 +124,7 @@ optional arguments:
 
 ## 2.3 Example input / output
 
-# For the standard formulation:
+### 2.3.1 For the standard formulation:
 
 The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
 
@@ -146,6 +146,62 @@ Its minimum flow decomposition in the figure (right) will be output as:
 4 ['s', 'a', 'c', 'd', 't']
 2 ['s', 'a', 'b', 'c', 'd', 't']
 7 ['s', 'b', 'c', 't']
+```
+
+### 2.3.2 For the inexact formulation:
+
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
+
+```
+6
+s a 4 5
+s b 6 8
+a b 2 3
+a c 3 5
+b c 8 10
+c d 5 7
+c t 6 8
+d t 5 7
+```
+
+Its minimum flow decomposition in the figure (right) will be output as:
+
+```
+2 ['s', 'a', 'b', 'c', 'd', 't']
+3 ['s', 'a', 'c', 'd', 't']
+6 ['s', 'b', 'c', 't']
+```
+
+### 2.3.3 For the subpath formulation:
+
+The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
+
+```
+6
+s a 6
+s b 7
+a b 2
+a c 4
+b c 9
+c d 6
+c t 7
+d t 6
+```
+With subpath files:
+
+```
+2
+s a b 
+a c
+``
+
+
+Its minimum flow decomposition in the figure (right) will be output as:
+
+```
+2 ['s', 'a', 'b', 'c', 'd', 't']
+3 ['s', 'a', 'c', 'd', 't']
+6 ['s', 'b', 'c', 't']
 ```
 
 ## 2.4 Installing Gurobi
