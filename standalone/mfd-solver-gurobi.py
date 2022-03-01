@@ -6,10 +6,6 @@ import math
 import os
 from st_fd import *
 
-## This lower bound assumes that there are no edges with flow zero.
-## If there are, then it has to be changed to equal 
-## the number of in-/out-neighbors with non-zero flow.
-
 def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, max_flow, K, threads, weighttype):
         
     V = vertices
