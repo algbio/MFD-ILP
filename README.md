@@ -124,7 +124,7 @@ optional arguments:
 
 ### 3.2 Example input / output for the inexact formulation:
 
-The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
+As an example of a graph where the flow values are defined within a range, the input file can be written as:
 
 ```
 6
