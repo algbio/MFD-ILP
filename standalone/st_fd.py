@@ -1,7 +1,3 @@
-## This lower bound assumes that there are no edges with flow zero.
-## If there are, then it has to be changed to equal 
-## the number of in-/out-neighbors with non-zero flow.
-
 import math
 import sys
 import more_itertools
@@ -23,8 +19,6 @@ def lower_bound_distinct_flow_values(edges):
     
     flow_values = set(edges.values())
     return math.ceil(math.log2(len(flow_values)))
-
-import math
 
 def get_extremity(neighbors, extremity_type):
     
