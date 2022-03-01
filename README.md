@@ -138,7 +138,7 @@ c t 6 8
 d t 5 7
 ```
 
-Its minimum flow decomposition in the figure (right) will be output as:
+A minimum inexact flow decomposition will be output as:
 
 ```
 2 ['s', 'a', 'b', 'c', 'd', 't']
@@ -172,20 +172,7 @@ optional arguments:
 
 ### 3.4 Example input / output for the subpath formulation:
 
-The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
-
-```
-6
-s a 6
-s b 7
-a b 2
-a c 4
-b c 9
-c d 6
-c t 7
-d t 6
-```
-With subpath files:
+If we give this subpath file in addition to the flow in the above figure (left):
 
 ```
 2
@@ -193,7 +180,7 @@ s a b
 a c
 ```
 
-Its minimum flow decomposition in the figure (right) will be output as:
+a minimum flow decomposition with these subpaths constraints will be output as:
 
 ```
 2 ['s', 'a', 'b', 'c', 'd', 't']
