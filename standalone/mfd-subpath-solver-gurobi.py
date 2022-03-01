@@ -6,6 +6,10 @@ import math
 import os
 from st_fd import *
 
+## This lower bound assumes that there are no edges with flow zero.
+## If there are, then it has to be changed to equal 
+## the number of in-/out-neighbors with non-zero flow.
+
 def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, max_flow, K, threads, weighttype,subpaths,subpaths_weights):
         
     V = vertices
@@ -64,7 +68,7 @@ def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, m
             
         # subpath contraints
         for k in range(0,K):
-            for s in range(1,len(subpaths)):
+            for s in range(1,len(subpaths)+1):
                 model.addConstr(sum(x[i,j,k] for (i,j) in subpaths[s]) >= len(subpaths[s])*r[k,s])
         
         model.addConstrs(sum(r[k,j] for k in range(0,K)) >= 1 for j in range(1,len(subpaths)))
