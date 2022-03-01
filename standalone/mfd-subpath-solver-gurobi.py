@@ -68,13 +68,11 @@ def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, m
             
         # subpath contraints
         for k in range(0,K):
-            for j in range(1,len(subpaths)):
-                model.addConstr(sum(x[i,j,k] for (i,j) in subpaths[j]) >= len(subpaths[j])*r[k,j])
+            for s in range(1,len(subpaths)):
+                model.addConstr(sum(x[i,j,k] for (i,j) in subpaths[s]) >= len(subpaths[s])*r[k,s])
         
         model.addConstrs(sum(r[k,j] for k in range(0,K)) >= 1 for j in range(1,len(subpaths)))
         
-
-
         # objective function
         model.optimize()
         w_sol = [0]*len(range(0,K))

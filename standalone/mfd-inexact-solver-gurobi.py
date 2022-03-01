@@ -136,7 +136,6 @@ max_flow = graph['max_flow']
 
 lower_bound = lower_bound_degree(out_neighbors)
 lower_bound = max(lower_bound, lower_bound_degree(in_neighbors))
-lower_bound = max(lower_bound, lower_bound_distinct_flow_values(fup))
 
 minK = lower_bound
 maxK = len(fdown)

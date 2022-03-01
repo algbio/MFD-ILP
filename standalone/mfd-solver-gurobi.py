@@ -4,118 +4,11 @@ import gurobipy as gp
 from gurobipy import GRB
 import math
 import os
+from st_fd import *
 
 ## This lower bound assumes that there are no edges with flow zero.
 ## If there are, then it has to be changed to equal 
 ## the number of in-/out-neighbors with non-zero flow.
-def lower_bound_degree(neighbors):
-    
-    max_deg = 1
-    for node, node_neighbors in neighbors.items():
-        if len(node_neighbors) > max_deg:
-            max_deg = len(node_neighbors)
-    
-    return max_deg
-
-def lower_bound_distinct_flow_values(edges):
-    
-    flow_values = set(edges.values())
-    return math.ceil(math.log2(len(flow_values)))
-
-def get_extremity(neighbors, extremity_type):
-    
-    extremity = None
-    for node, node_neighbors in neighbors.items():
-        if len(node_neighbors) == 0:
-            if extremity != None:
-                sys.exit(f"ERROR: input graph has more than one {extremity_type}")
-            else:
-                extremity = node
-
-    if extremity == None:
-        sys.exit(f"ERROR: The input graph has no {extremity_type} (and thus it is not a DAG)")
-
-    return extremity
-
-def read_input(graphfile, weighttype):
-    
-    lines = open(graphfile,'r').readlines()
-    
-    num_nodes = 0
-    edges = dict()
-    out_neighbors = dict()
-    in_neighbors = dict()
-    max_flow = 0
-
-    for line in lines:
-        line = line.strip()
-        if line[0] == '#' or line == '':
-            continue
-        elements = line.split(' ')
-        if len(elements) == 1: # Number of nodes
-            num_nodes = int(elements[0])
-        elif len(elements) == 3: # True edge
-            flow_value = float(elements[2])
-            if flow_value < 0:
-                sys.exit("ERROR: The input graph cannot have negative flow values")
-            if weighttype.startswith('int'):
-                if flow_value - int(flow_value) > 0:
-                    sys.exit("ERROR: The input graph contains non-integer flow values, but the weights of the paths are required to be integers (--weighttype {weighttype})")
-            edges[(elements[0], elements[1])] = flow_value
-            max_flow = max(max_flow,flow_value)
-            
-            if elements[0] not in out_neighbors:
-                out_neighbors[elements[0]] = []
-            out_neighbors[elements[0]].append(elements[1])
-
-            if elements[1] not in in_neighbors:
-                in_neighbors[elements[1]] = []
-            in_neighbors[elements[1]].append(elements[0])
-
-            if elements[0] not in in_neighbors:
-                in_neighbors[elements[0]] = []
-            if elements[1] not in out_neighbors:
-                out_neighbors[elements[1]] = []
-        else:
-            sys.exit("ERROR: input file contains an ill-formatted line")
-    if num_nodes != len(in_neighbors):
-        sys.exit(f"ERROR: expecting {num_nodes} nodes, the input graph has {len(in_neighbors)} nodes")
-
-    source = get_extremity(in_neighbors, 'source')
-    sink = get_extremity(out_neighbors, 'sink')
-
-    return {'vertices': list(in_neighbors.keys()), 'edges' : edges, 'out_neighbors': out_neighbors, 'in_neighbors': in_neighbors, 'source': source, 'sink': sink, 'max_flow': max_flow}
-
-def write_outout(outputfilename, paths, w, weighttype):
-    
-    outputfile = open(outputfilename, 'w')
-
-    if paths == None:
-        outputfile.write("ERROR: Did not find any decomposition")
-    else:
-        for k in range(0, len(paths)):
-            if weighttype.startswith('int'):
-                outputfile.write(f"{int(w[k])} {paths[k]}\n")
-            else:
-                outputfile.write(f"{w[k]} {paths[k]}\n")
-
-    outputfile.close()
-
-def extract_paths(x, source, sink, out_neighbors, K):
-    
-    paths = []
-    for k in range(0,K):
-        vertex = source
-        path = [vertex]
-        while vertex != sink:
-            for out_neighbor in out_neighbors[vertex]:
-                if x[vertex,out_neighbor,k] == 1:
-                    vertex = out_neighbor
-                    break
-            path.append(vertex)
-        paths.append(path)
-
-    return paths
 
 def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, max_flow, K, threads, weighttype):
         
@@ -234,7 +127,7 @@ if threads == 0:
     threads = os.cpu_count()
 print(f"INFO: Using {threads} threads for the Gurobi solver")
 
-graph = read_input(args.input, args.weighttype)
+graph = read_input_standard(args.input, args.weighttype)
 edges = graph['edges']
 vertices = graph['vertices']
 in_neighbors = graph['in_neighbors']
