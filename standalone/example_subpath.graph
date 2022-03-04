@@ -1,4 +1,9 @@
-# subpaths
-2
-1 s a b
-1 a c
+6
+s a 6
+s b 7
+a b 2
+a c 4
+b c 9
+c d 6
+c t 7
+d t 6
