@@ -21,7 +21,7 @@ def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, m
         #create extra sets
         T = [(i,j,k) for (i,j) in E for k in range(0,K)]
         SC = [k for k in range(0,K)]
-        R = [(k,s) for k in range(0,K) for s in range(1,len(subpaths))]
+        R = [(k,s) for k in range(0,K) for s in range(1,len(subpaths)+1)]
         
         # Create a new model
         model = gp.Model("MFD")
@@ -71,7 +71,7 @@ def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, m
             for s in range(1,len(subpaths)+1):
                 model.addConstr(sum(x[i,j,k] for (i,j) in subpaths[s]) >= len(subpaths[s])*r[k,s])
         
-        model.addConstrs(sum(r[k,j] for k in range(0,K)) >= 1 for j in range(1,len(subpaths)))
+        model.addConstrs(sum(r[k,j] for k in range(0,K)) >= 1 for j in range(1,len(subpaths)+1))
         
         # objective function
         model.optimize()
