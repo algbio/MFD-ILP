@@ -176,16 +176,17 @@ If we give this subpath file in addition to the flow in the above figure (left):
 
 ```
 2
-s a b 
-a c
+1 a c t
+1 s b c
 ```
 
 a minimum flow decomposition with these subpaths constraints will be output as:
 
 ```
+4 ['s', 'b', 'c', 'd', 't']
+3 ['s', 'b', 'c', 't']
 2 ['s', 'a', 'b', 'c', 'd', 't']
-3 ['s', 'a', 'c', 'd', 't']
-6 ['s', 'b', 'c', 't']
+4 ['s', 'a', 'c', 't']
 ```
 
 ## 4 Installing Gurobi
