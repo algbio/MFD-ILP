@@ -151,21 +151,17 @@ A minimum inexact flow decomposition will be output as:
 Run the solver as:
 
 ```
-python3 mfd-subpath-solver-gurobi.py -i INPUT -s SUBPATHS -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
+python3 mfd-subpath-solver-gurobi.py -i INPUT -s SUBPATHS -o OUTPUT [-t THREADS]
 
 required arguments:
   -i INPUT, --input INPUT
                         Input filename
-  -s SUBPATHS, --input SUBPATHS
+  -s SUBPATHS, --subpaths SUBPATHS
                         Subpaths filename
   -o OUTPUT, --output OUTPUT
                         Output filename
 
 optional arguments:
-  -wt WEIGHTTYPE, --weighttype WEIGHTTYPE
-                        Type of path weights (default int+):
-                           int+ (positive non-zero ints), 
-                           float+ (positive non-zero floats).
   -t THREADS, --threads THREADS
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
