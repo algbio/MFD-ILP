@@ -35,11 +35,11 @@ def decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, m
         r = model.addVars(R,vtype=GRB.BINARY,name="r")
 
         if weighttype == 'int+':
-            w = model.addVars(SC,vtype=GRB.INTEGER, name="w",lb=0)
+            w = model.addVars(SC,vtype=GRB.INTEGER, name="w",lb=1)
             z = model.addVars(T, vtype=GRB.CONTINUOUS, name="z", lb=0)
-        elif weighttype == 'float+':
-            w = model.addVars(SC,vtype=GRB.CONTINUOUS, name="w",lb=0)
-            z = model.addVars(T, vtype=GRB.CONTINUOUS, name="z", lb=0)
+        # elif weighttype == 'float+':
+        #     w = model.addVars(SC,vtype=GRB.CONTINUOUS, name="w",lb=0)
+        #     z = model.addVars(T, vtype=GRB.CONTINUOUS, name="z", lb=0)
         else:
             sys.exit(f"ERROR: Unknown weight type {weighttype}")
     
@@ -121,7 +121,7 @@ parser = argparse.ArgumentParser(
     """,
     formatter_class=argparse.RawTextHelpFormatter
     )
-parser.add_argument('-wt', '--weighttype', type=str, default='int+', help='Type of path weights (default int+):\n   int+ (positive non-zero ints), \n   float+ (positive non-zero floats).')
+# parser.add_argument('-wt', '--weighttype', type=str, default='int+', help='Type of path weights (default int+):\n   int+ (positive non-zero ints), \n   float+ (positive non-zero floats).')
 parser.add_argument('-t', '--threads', type=int, default=0, help='Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).')
 
 requiredNamed = parser.add_argument_group('required arguments')
@@ -131,13 +131,14 @@ requiredNamed.add_argument('-o', '--output', type=str, help='Output filename', r
 
 
 args = parser.parse_args()
+weighttype = "int+"
 
 threads = args.threads
 if threads == 0:
     threads = os.cpu_count()
 print(f"INFO: Using {threads} threads for the Gurobi solver")
 
-graph = read_input_standard(args.input, args.weighttype)
+graph = read_input_standard(args.input, weighttype)
 subpaths,subpaths_weights = read_input_subpath(args.subpaths)
 edges = graph['edges']
 vertices = graph['vertices']
@@ -157,11 +158,11 @@ maxK = len(edges)
 w = None
 paths = None
 for K in range(minK, maxK + 1):
-    data = decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, max_flow, K, threads, args.weighttype,subpaths,subpaths_weights)
+    data = decompose_flow(vertices, edges, out_neighbors, in_neighbors, source, sink, max_flow, K, threads, weighttype, subpaths, subpaths_weights)
     if data['message'] == "solved":
         w = data['weights']
         paths = data['paths']
         print(f"INFO: Found a decomposition into {K} paths")
         break
 
-write_outout(args.output, paths, w, args.weighttype)
+write_outout(args.output, paths, w, weighttype)
