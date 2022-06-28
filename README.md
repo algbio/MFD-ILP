@@ -31,6 +31,8 @@ Python:
  
  ## 1.3 Different Formulations
 There are three different solvers available: the "Standard" files corresponds to the original and standard formulation; the "Inexact" files corresponds to the original formulations adjusted to incorporate inexact flow constraints and the "Subpath" files corresponds to the original formulations with the addition to the subpath constraints.
+
+Newer solver have been added: "Subpath-Inexact" is a version which combines subpath constraints and inexact flows and "Subpath-Inexact-WC", which further the previous version by impose that easy subpath constraint required at least a minimal weight on the final decomposition. Both Solvers are currently only available with Gurobi.
  
  ## 1.4 Running the solvers
  For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
@@ -184,6 +186,7 @@ a minimum flow decomposition with these subpaths constraints will be output as:
 2 ['s', 'a', 'b', 'c', 'd', 't']
 4 ['s', 'a', 'c', 't']
 ```
+
 
 ## 4 Installing Gurobi
 
