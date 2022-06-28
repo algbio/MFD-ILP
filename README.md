@@ -187,6 +187,39 @@ a minimum flow decomposition with these subpaths constraints will be output as:
 4 ['s', 'a', 'c', 't']
 ```
 
+### 3.2 Example input / output for the inexact + subpath formulation:
+
+As an example of a graph where the flow values are defined within a range, the input file can be written as:
+
+```
+6
+s a 4 5
+s b 6 8
+a b 2 3
+a c 3 5
+b c 8 10
+c d 5 7
+c t 6 8
+d t 5 7
+```
+with the following subpath file
+
+```
+3
+1 a c t
+1 s b c
+1 s a b
+```
+
+A minimum inexact flow decomposition will be output as:
+
+```
+2 ['s', 'a', 'b', 'c', 'd', 't']
+3 ['s', 'a', 'c', 'd', 't']
+6 ['s', 'b', 'c', 't']
+```
+
+For inexact + subpath, the weight of that subpath (the number right in front of it) it is not considered while in the inexact + subpath with weights, those values are used in the subpath weight constraints.
 
 ## 4 Installing Gurobi
 
