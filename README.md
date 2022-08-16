@@ -10,7 +10,7 @@ In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with u
 
 For MFD in cyclic graphs, the formulation can be found at:
 
-> Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Fast, Flexible, and Exact Minimum Flow Decompositions via ILP**, To appear in the Proceedings of **RECOMB 2022** - 26th Annual International Conference on Research in Computational Molecular Biology, 2022, [**Full version**](https://arxiv.org/abs/2201.10923).
+> Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, ** Flow Decomposition in Graphs with Cycles[**Full version**](https://arxiv.org/abs/2201.10923).
 
 
 For all MFD variants, we provide Jupyter notebooks implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
