@@ -6,11 +6,14 @@ This repository contains solvers for the Minimum Flow Decomposition (MFD) proble
 
 In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with unique source *s* and unique sink *t*, and we need to decompose it into the minimum number of weighted paths (usually the weights are positive integers) from *s* to *t*, such that the weights of the paths sum up to the flow values, for every edge. In the image below, the flow is decomposable into 3 weighted paths, and this number is minimum.
 
-![MFD Example](https://github.com/algbio/MFD-ILP/raw/main/mfd-example.png) 
+![MFD in DAGS Example](https://github.com/algbio/MFD-ILP/raw/main/mfd-example.png) 
 
 For MFD in cyclic graphs, the formulation can be found at:
 
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, ** Flow Decomposition in Graphs with Cycles[**Full version**](https://arxiv.org/abs/2201.10923).
+
+
+![MFD in Cyclic Graph Example](https://github.com/algbio/MFD-ILP/raw/main/mfd-example.png) 
 
 
 For all MFD variants, we provide Jupyter notebooks implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
