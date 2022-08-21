@@ -35,7 +35,7 @@ Python:
 There are three different solvers available: the "FDPC" files corresponds to the formulation where the elements are limited to paths or cycles; the "FDT" files corresponds to the original formulations adjusted to obtain only trails and the "FDW" files corresponds to the formulations that admit only walks.
 
  ## 1.4 Running the solvers
- For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
+ For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are.
 
 As reminder, all the input files are in [Catfish](https://github.com/Kingsford-Group/catfishtest) format. See folder `Example` for sample of inputs.
 
@@ -91,7 +91,7 @@ Its minimum flow decomposition in the figure (right) will be output as:
 ```
 
 # 3. Dataset Creation
-The dataset used to test these formulations are adapted from the available datasets in the literature. However, some alterations were necessary due to the specificities of our formulations. This section provides a complete detailed explanation of how such datasets were adapted and created. The dataset are named, according to their reference in the paper: SRR020730 Salmon Adapted, Transportation Data and E. coli Strains.
+The dataset used to test these formulations are adapted from the available datasets in the literature. However, some alterations were necessary due to the specificities of our formulations. This section provides a complete detailed explanation of how such datasets were adapted and created. The dataset are named, according to their reference in the paper: *SRR020730 Salmon Adapted*, *Transportation Data* and *E. coli Strains*.
 
 ## Dataset 1: SRR020730 Salmon Adapted
 A specific sample from the Catfish archive was selected for this dataset, and new cyclic graphs were created using the ground truth files. We took each ground truth for each graph and created a few copies of it. In each copy, we swapped two random nodes (except the source and sink). We built the graph using new and original ground truths, and that guarantees that at least one cycle is obtained.
