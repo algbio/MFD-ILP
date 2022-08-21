@@ -32,10 +32,8 @@ Python:
  For each solver, examples of the inputs are available in `Example` folder.
  
  ## 1.3 Different Formulations
-There are three different solvers available: the "Standard" files corresponds to the original and standard formulation; the "Inexact" files corresponds to the original formulations adjusted to incorporate inexact flow constraints and the "Subpath" files corresponds to the original formulations with the addition to the subpath constraints.
+There are three different solvers available: the "FDPC" files corresponds to the formulation where the elements are limited to paths or cycles; the "FDT" files corresponds to the original formulations adjusted to obtain only trails and the "FDW" files corresponds to the formulations that admit only walks.
 
-Newer solver have been added: "Subpath-Inexact" is a version which combines subpath constraints and inexact flows and "Subpath-Inexact-WC", which further the previous version by impose that easy subpath constraint required at least a minimal weight on the final decomposition. Both Solvers are currently only available with Gurobi.
- 
  ## 1.4 Running the solvers
  For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are. For the subpath constraints formulation, also change the $number_paths$ to the appropriated amount. The default value is 4.
 
@@ -51,7 +49,7 @@ As reminder, all the input files are in [Catfish](https://github.com/Kingsford-G
 Run the solver as:
 
 ```
-python3 mfd-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
+python3  -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
 
 required arguments:
   -i INPUT, --input INPUT
@@ -68,14 +66,14 @@ optional arguments:
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE 1**: Check `standalone/example1.graph` and `standalone/example2.graph` for an example input graphs. Note that, as opposed to the Jupyter notebooks, the stand-alone solver cannot read more than one graph from the input file. Encode only a single graph in the input file!
+**NOTE 1**: 
 
 **NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
 ```
-python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalone/example2.out
+python3 
 ```
 
 ### 2.2 Example input / output for the standard formulation:
@@ -83,150 +81,42 @@ python3 standalone/mfd-solver-gurobi.py -i standalone/example2.graph -o standalo
 The flow in the above figure (left) can be encoded as (`6` is the number of nodes):
 
 ```
-6
-s a 6
-s b 7
-a b 2
-a c 4
-b c 9
-c d 6
-c t 7
-d t 6
+
 ```
 
 Its minimum flow decomposition in the figure (right) will be output as:
+
+```
+
+```
+
+# 3. Dataset Creation
+The dataset used to test these formulations are adapted from the available datasets in the literature. However, some alterations were necessary due to the specificities of our formulations. This section provides a complete detailed explanation of how such datasets were adapted and created. The dataset are named, according to their reference in the paper: SRR020730 Salmon Adapted, Transportation Data and E. coli Strains.
+
+## Dataset 1: SRR020730 Salmon Adapted
+A specific sample from the Catfish archive was selected for this dataset, and new cyclic graphs were created using the ground truth files. We took each ground truth for each graph and created a few copies of it. In each copy, we swapped two random nodes (except the source and sink). We built the graph using new and original ground truths, and that guarantees that at least one cycle is obtained.
+
+For example, assume for a graph that the ground truth is:
 
 ```
 4 ['s', 'a', 'c', 'd', 't']
 2 ['s', 'a', 'b', 'c', 'd', 't']
 7 ['s', 'b', 'c', 't']
 ```
-
-## 3 Stand-alone solver of MFD variants
-
-### 3.1 For inexact formulation:
-
-Run the solver as:
-
+By duplicating each ground truth and swapping each position randomly:
 ```
-python3 mfd-inexact-solver-gurobi.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
-
-required arguments:
-  -i INPUT, --input INPUT
-                        Input filename
-  -o OUTPUT, --output OUTPUT
-                        Output filename
-
-optional arguments:
-  -wt WEIGHTTYPE, --weighttype WEIGHTTYPE
-                        Type of path weights (default int+):
-                           int+ (positive non-zero ints), 
-                           float+ (positive non-zero floats).
-  -t THREADS, --threads THREADS
-                        Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
-```
-
-### 3.2 Example input / output for the inexact formulation:
-
-As an example of a graph where the flow values are defined within a range, the input file can be written as:
-
-```
-6
-s a 4 5
-s b 6 8
-a b 2 3
-a c 3 5
-b c 8 10
-c d 5 7
-c t 6 8
-d t 5 7
-```
-
-A minimum inexact flow decomposition will be output as:
-
-```
+4 ['s', 'a', 'c', 'd', 't']
 2 ['s', 'a', 'b', 'c', 'd', 't']
-3 ['s', 'a', 'c', 'd', 't']
-6 ['s', 'b', 'c', 't']
+7 ['s', 'b', 'c', 't']
+4 ['s', 'c', 'a', 'd', 't']
+2 ['s', 'a', 'd', 'c', 'b', 't']
 ```
+The resulting graph contains the original paths plus additional cycles.
 
-### 3.3 For subpath formulation:
+This dataset is suitable for testing our FDPC formulation because it admits decompositions where the original paths are still obtained and new decompositions where cycles are obtained.
 
-Run the solver as:
+## Dataset 2: Transportation DAta
 
-```
-python3 mfd-subpath-solver-gurobi.py -i INPUT -s SUBPATHS -o OUTPUT [-t THREADS]
+## Dataset 3: 
 
-required arguments:
-  -i INPUT, --input INPUT
-                        Input filename
-  -s SUBPATHS, --subpaths SUBPATHS
-                        Subpaths filename
-  -o OUTPUT, --output OUTPUT
-                        Output filename
 
-optional arguments:
-  -t THREADS, --threads THREADS
-                        Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
-```
-
-### 3.4 Example input / output for the subpath formulation:
-
-If we give this subpath file in addition to the flow in the above figure (left):
-
-```
-2
-1 a c t
-1 s b c
-```
-
-a minimum flow decomposition with these subpaths constraints will be output as:
-
-```
-4 ['s', 'b', 'c', 'd', 't']
-3 ['s', 'b', 'c', 't']
-2 ['s', 'a', 'b', 'c', 'd', 't']
-4 ['s', 'a', 'c', 't']
-```
-
-### 3.2 Example input / output for the inexact + subpath formulation:
-
-As an example of a graph where the flow values are defined within a range, the input file can be written as:
-
-```
-6
-s a 4 5
-s b 6 8
-a b 2 3
-a c 3 5
-b c 8 10
-c d 5 7
-c t 6 8
-d t 5 7
-```
-with the following subpath file
-
-```
-3
-1 a c t
-1 s b c
-1 s a b
-```
-
-A minimum inexact flow decomposition will be output as:
-
-```
-2 ['s', 'a', 'b', 'c', 'd', 't']
-3 ['s', 'a', 'c', 'd', 't']
-6 ['s', 'b', 'c', 't']
-```
-
-For inexact + subpath, the weight of that subpath (the number right in front of it) it is not considered while in the inexact + subpath with weights, those values are used in the subpath weight constraints.
-
-## 4 Installing Gurobi
-
-Download the solver from [www.gurobi.com](www.gurobi.com), activate the (academic) license as instructed, and then install the Python API with:
-
-```
-pip3 install gurobipy
-```
