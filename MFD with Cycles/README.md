@@ -6,7 +6,7 @@ This repository contains solvers for the Minimum Flow Decomposition (MFD) proble
 
 In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with unique source *s* and unique sink *t*, and we need to decompose it into the minimum number of weighted elements (in this case paths or cycles, walks and trails) (usually the weights are positive integers) from *s* to *t*, such that the weights of the elements sum up to the flow values, for every edge. 
 
-In the image below, the flow is decomposable into 4 weighted paths and cycles in a), into 3 trails in b) and into 2 walks in c). For eahc decomposition, the number of elements is minimum.
+In the image below, the flow is decomposable into 4 weighted paths and cycles in a), into 3 trails in b) and into 2 walks in c). For each decomposition, the number of elements is minimum.
 
 <img src="https://github.com/algbio/MFD-ILP/raw/main/fd_cycles.png" width="900" height="550">
 
@@ -91,7 +91,7 @@ Its minimum flow decomposition in the figure (right) will be output as:
 ```
 
 # 3. Dataset Creation
-The dataset used to test these formulations are adapted from the available datasets in the literature. However, some alterations were necessary due to the specificities of our formulations. This section provides a complete detailed explanation of how such datasets were adapted and created. The dataset are named, according to their reference in the paper: **SRR020730 Salmon Adapted**, **Transportation Data** and ** *E. coli* Strains **.
+The dataset used to test these formulations are adapted from the available datasets in the literature. However, some alterations were necessary due to the specificities of our formulations. This section provides a complete detailed explanation of how such datasets were adapted and created. The dataset are named, according to their reference in the paper: **SRR020730 Salmon Adapted**, **Transportation Data** and **_E. coli_ Strains**.
 
 ## Dataset 1: SRR020730 Salmon Adapted
 A specific sample from the [Catfish](https://github.com/Kingsford-Group/catfishtest) archive was selected for this dataset, and new cyclic graphs were created using the ground truth files. We took each ground truth for each graph and created a few copies of it. In each copy, we swapped two random nodes (except the source and sink). We built the graph using new and original ground truths, and that guarantees that at least one cycle is obtained.
