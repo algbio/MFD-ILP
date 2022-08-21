@@ -13,7 +13,7 @@ For MFD in cyclic graphs, the formulation can be found at:
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, ** Flow Decomposition in Graphs with Cycles[**Full version**](https://arxiv.org/abs/2201.10923).
 
 
-![MFD in Cyclic Graph Example](https://github.com/algbio/MFD-ILP/raw/main/FD with Cycles.pdf) 
+![MFD in Cyclic Graph Example](https://github.com/algbio/MFD-ILP/raw/main/fd_cycles.pdf) 
 
 
 For all MFD variants, we provide Jupyter notebooks implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
