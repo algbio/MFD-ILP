@@ -115,7 +115,7 @@ The resulting graph contains the original paths plus additional cycles.
 
 This dataset is suitable for testing our FDPC formulation because it admits decompositions where the original paths are still obtained and new decompositions where cycles are obtained.
 
-## Dataset 2: Transportation DAta
+## Dataset 2: Transportation Data
 
 ## Dataset 3: **_E. coli_ Strains**
 
