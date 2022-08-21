@@ -1,4 +1,4 @@
-# Fast and exact ILP-based solvers for the Minimum Flow Decomposition problem, and variants of it
+# Minimum Flow Decompostion Variants in DAGs
 
 This repository contains solvers for the Minimum Flow Decomposition (MFD) problem, and variants of it, described in the paper:
 
