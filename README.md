@@ -12,6 +12,9 @@ For MFD in cyclic graphs, the formulation can be found at:
 
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, ** Minimum Flow Decomposition in Graphs with Cycles via Integer Linear Programming[**Full version**](https://arxiv.org/abs/2201.10923).
 
+
+In the image below, the flow is decomposable into 4 weighted paths and cycles in a), into 3 trails in b) and into 2 walks in c). For eahc decomposition, the number of elements is minimum.
+
 <img src="https://github.com/algbio/MFD-ILP/raw/main/fd_cycles.png" width="900" height="550">
 
 
