@@ -1,18 +1,18 @@
 # Minimum Flow Decomposition in Cyclic Graphs and its variants
 
-This repository contains solvers for the Minimum Flow Decomposition (MFD) problem in cyclic graphs, and variants of it, described in the paper:
+This repository contains solvers for the Minimum Flow Decomposition (MFD) problem in cyclic graphs and variants of it described in the paper:
 
 > Fernando H. C. Dias, Lucia Williams, Brendan Mumey, Alexandru I. Tomescu, **Minimal Flow Decomposition in Graphs with Cycles using Integer Linear Programming**, [**Full version**](https://arxiv.org/abs/2201.10923).
 
-In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with unique source *s* and unique sink *t*, and we need to decompose it into the minimum number of weighted elements (in this case paths or cycles, walks and trails) (usually the weights are positive integers) from *s* to *t*, such that the weights of the elements sum up to the flow values, for every edge. 
+In the MFD problem, we are given a flow in a directed acyclic graph (DAG) with unique source *s* and unique sink *t*, and we need to decompose it into the minimum number of weighted elements (in this case, paths or cycles, walks and trails) (usually the weights are positive integers) from *s* to *t*, such that the weights of the elements sum up to the flow values, for every edge. 
 
-In the image below, the flow is decomposable into 4 weighted paths and cycles in a), into 3 trails in b) and into 2 walks in c). For each decomposition, the number of elements is minimum.
+In the image below, the flow is decomposable into 4 weighted paths and cycles in a), 3 trails in b), and 2 walks in c). For each decomposition, the number of elements is minimum.
 
 <img src="https://github.com/algbio/MFD-ILP/raw/main/fd_cycles.png" width="900" height="550">
 
 For all MFD variants described in the paper above, we provide Jupyter notebooks (folder `notebooks`) implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
 
-In addition, for standard MFD we provide a slightly more efficient stand-alone solver (folder `standalone`), which uses the Gurobi API.
+In addition, for standard MFD, we provide a slightly more efficient standalone solver (folder `standalone`), which uses the Gurobi API.
 
 # 1. Jupyter notebooks
 
@@ -25,22 +25,22 @@ Python:
   - os 
   - networkx 
   
- CPLEX Python API or Gurobi Python API (both version of the codes are available)
+ CPLEX Python API or Gurobi Python API (both versions of the codes are available)
  Jupyter Notebook
  
  ## 1.2 Inputs
- For each solver, examples of the inputs are available in `Example` folder.
+ For each solver, examples of the inputs are available in the `Example` folder.
  
  ## 1.3 Different Formulations
-There are three different solvers available: the "FDPC" files corresponds to the formulation where the elements are limited to paths or cycles; the "FDT" files corresponds to the original formulations adjusted to obtain only trails and the "FDW" files corresponds to the formulations that admit only walks.
+There are three different solvers available: the "FDPC" files correspond to the formulation where the elements are limited to paths or cycles; the "FDT" files correspond to the original formulations adjusted to obtain only trails, and the "FDW" files correspond to the formulations that admit only walks.
 
  ## 1.4 Running the solvers
- For each solvers, in order to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are.
+ For each solver, to run each formulation, open the respective notebook and change the variable $path$ in the last cell to the folder where all the input files are.
 
-As reminder, all the input files are in [Catfish](https://github.com/Kingsford-Group/catfishtest) format. See folder `Example` for sample of inputs.
+As a reminder, all the input files are in [Catfish](https://github.com/Kingsford-Group/catfishtest) format. See folder `Example` for a sample of inputs.
 
  ## 1.5 Outputs
- Each solver outputs two files: the first file called `results_[CPLEX or Gurobi].txt` contains  the optimal number of $k$ flow paths and the runtime required to solve such instance, each instance is displayed in a single line; the second file called `results_[CPLEX or Gurobi]-details.txt` contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
+ Each solver outputs two files: the first file called `results_[CPLEX or Gurobi].txt` contains the optimal number of $k$ flow paths and the runtime required to solve such instance; each instance is displayed in a single line; the second file called `results_[CPLEX or Gurobi]-details.txt` contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
 
 # 2. Stand-alone solver for standard MFD
 
