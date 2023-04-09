@@ -38,49 +38,6 @@ def read_input_graphs(graph_file):
     graphs_raw = open(graph_file, 'r').read().split('#')[1:]
     return [get_graph(raw_g) for raw_g in graphs_raw]
 
-def read_safe_paths(safe_file):
-    paths = open(safe_file,'r').read().split('\n')
-
-    listOfGraphs = []
-    i = 0
-
-    while(True):
-        if i >= len(paths):
-            break;
-        if "#" in paths[i]:
-            
-            # newgraph
-            i = i + 1
-            if i >= len(paths):
-                break;
-            if "" == paths[i]:
-                break;
-
-            # list of paths
-            paths_list = []
-
-            while(True):
-
-                line = paths[i].split(" ")
-                path = (line[1:len(line)])
-                nodes = [eval(node) for node in path]
-                edges_list = [[nodes[i], nodes[i + 1]]
-                    for i in range(len(nodes) - 1)]
-                
-                paths_list.append(edges_list)
-
-                i = i + 1
-                if i >= len(paths):
-                    break;
-                if "#" in paths[i]:
-                    break;
-                if "" == paths[i]:
-                    break;
-
-            listOfGraphs.append(paths_list)    
-        
-    return listOfGraphs
-
 def read_input(graph_file):
 
     return read_input_graphs(graph_file)
