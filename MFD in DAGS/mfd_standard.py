@@ -226,7 +226,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
         description='''
-        Computes paths for Inexact Minimum Flow Decomposition.
+        Computes paths for Standard Minimum Flow Decomposition.
         This script uses the Gurobi ILP solver.
         ''',
         formatter_class=argparse.RawTextHelpFormatter
