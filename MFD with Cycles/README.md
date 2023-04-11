@@ -10,23 +10,16 @@ In the image below, the flow is decomposable into 4 weighted paths and cycles in
 
 <img src="https://github.com/algbio/MFD-ILP/raw/main/fd_cycles.png" width="900" height="550">
 
-For all MFD variants described in the paper above, we provide Jupyter notebooks (folder `notebooks`) implemented using Python with the API for two different linear programming solvers: CPLEX and Gurobi.
+For all MFD variants described in the paper above, we provide standalone scrip implemented using Python with the API for two Gurobi as solver. In the folder 'Version 1.0', the initial version of those codes and Jupyter notebooks are available (using Gurobi and CPLEX as solvers).
 
-In addition, for standard MFD, we provide a slightly more efficient standalone solver (folder `standalone`), which uses the Gurobi API.
-
-# 1. Jupyter notebooks
+# 1. Scripts
 
 ## 1.1 Requirements
 
 Python:
   - itertools
-  - more_itertools
-  - math
   - os 
   - networkx 
-  
- CPLEX Python API or Gurobi Python API (both versions of the codes are available)
- Jupyter Notebook
  
  ## 1.2 Inputs
  For each solver, examples of the inputs are available in the `Example` folder.
@@ -42,14 +35,14 @@ As a reminder, all the input files are in [Catfish](https://github.com/Kingsford
  ## 1.5 Outputs
  Each solver outputs two files: the first file called `results_[CPLEX or Gurobi].txt` contains the optimal number of $k$ flow paths and the runtime required to solve such instance; each instance is displayed in a single line; the second file called `results_[CPLEX or Gurobi]-details.txt` contains in each line the corresponding value of $w_k$ and the $k$ flow path associated with that solution, different instances are separated by "------------". 
 
-# 2. Stand-alone solver for standard MFD
+# 2. Stand-alone solver for MFD with cycles
 
 ## 2.1 Running
 
 Run the solver as:
 
 ```
-python3  -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
+python3 script_name.py -i INPUT -o OUTPUT [-wt WEIGHTTYPE] [-t THREADS]
 
 required arguments:
   -i INPUT, --input INPUT
@@ -58,22 +51,16 @@ required arguments:
                         Output filename
 
 optional arguments:
-  -wt WEIGHTTYPE, --weighttype WEIGHTTYPE
-                        Type of path weights (default int+):
-                           int+ (positive non-zero ints), 
-                           float+ (positive non-zero floats).
   -t THREADS, --threads THREADS
                         Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).
 ```
 
-**NOTE 1**: 
-
-**NOTE 2**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
+**NOTE 1**: This graph format does not support parallel edges. If your graph has such edges, subdivide them (i.e. replace them with a path of two edges).
 
 Example usage:
 
 ```
-python3 
+python3 mfd_pc.py -i
 ```
 
 ### 2.2 Example input / output for the standard formulation:
