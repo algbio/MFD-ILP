@@ -127,17 +127,12 @@ def build_base_ilp_model(data, size):
         model.addConstr(f - sum(z[u, v, i, k] for k in range(size)) == 0)
 
     # supbatph constraitns
-    
-    print(subpathEdges)
     for k in range(0,size):
         for s in range(0,subpathNumber):
             model.addConstr(sum(x[u,v,0,k] for (u,v) in subpathEdges[s]) >= len(subpathEdges[s])*r[k,s])
     
     model.addConstrs(sum(r[k,s] for k in range(0,size)) >= 1 for s in range(0,len(subpath['paths'])))
            
-
-        
-
     # linearization
     for (u, v, i) in graph.edges(keys=True):
         for k in range(size):
