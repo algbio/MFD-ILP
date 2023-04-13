@@ -122,7 +122,7 @@ def build_base_ilp_model(data, size):
     x = model.addVars(T, vtype=GRB.BINARY, name='x')
     w = model.addVars(SC, vtype=GRB.INTEGER, name='w', lb=1)
     z = model.addVars(T, vtype=GRB.CONTINUOUS, name='z', lb=0)
-    r = model.addVars(R, vtype=GRB.CONTINUOUS,name='r')
+    r = model.addVars(R, vtype=GRB.BINARY,name='r')
 
     # flow conservation
     for k in range(size):
