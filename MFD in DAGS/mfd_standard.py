@@ -16,6 +16,7 @@ def get_edge(raw_edge):
     parts = raw_edge.split()
     return int(parts[0]), int(parts[1]), float(parts[2])
 
+
 def get_graph(raw_graph):
 
     graph = {
@@ -44,7 +45,7 @@ def read_input(graph_file):
 
 
 def mfd_algorithm(data):
-
+    data['runtime'] = 0
     data['message'] = 'unsolved'
     for i in range(2, len(data['graph'].edges) + 1):
         if fd_fixed_size(data, i)['message'] == 'solved':
@@ -52,14 +53,12 @@ def mfd_algorithm(data):
 
     return data
 
-
 def build_base_ilp_model(data, size):
 
     graph = data['graph']
     max_flow_value = data['max_flow_value']
     sources = data['sources']
     sinks = data['sinks']
-    B = 2
 
     # create extra sets
     T = [(u, v, i, k) for (u, v, i) in graph.edges(keys=True) for k in range(size)]
@@ -73,7 +72,7 @@ def build_base_ilp_model(data, size):
 
     # Create variables
     x = model.addVars(T, vtype=GRB.BINARY, name='x')
-    w = model.addVars(SC, vtype=GRB.INTEGER, name='w', lb=1)
+    w = model.addVars(SC, vtype=GRB.INTEGER, name='w', lb=0)
     z = model.addVars(T, vtype=GRB.CONTINUOUS, name='z', lb=0)
 
     # flow conservation
@@ -86,9 +85,9 @@ def build_base_ilp_model(data, size):
             if v not in sources and v not in sinks:
                 model.addConstr(sum(x[v, w, i, k] for _, w, i in graph.out_edges(v, keys=True)) - sum(x[u, v, i, k] for u, _, i in graph.in_edges(v, keys=True)) == 0)
 
-    # flow superposition
+    # flow balance
     for (u, v, i, f) in graph.edges(keys=True, data='flow'):
-        model.addConstr(f - sum(z[u, v, i, k] for k in range(size)) == 0)
+        model.addConstr(f == sum(z[u, v, i, k] for k in range(size)))
 
     # linearization
     for (u, v, i) in graph.edges(keys=True):
@@ -127,11 +126,12 @@ def update_status(data, model):
 
     if model.status == GRB.OPTIMAL:
         data['message'] = 'solved'
-        data['runtime'] = model.Runtime
+        data['runtime'] += model.Runtime
 
     if model.status == GRB.INFEASIBLE:
         data['message'] = 'unsolved'
         data['runtime'] = 0
+
 
     return data
 
@@ -168,9 +168,15 @@ def output_paths(output,paths,weights):
             nodes.add(j)
         
         output.write(str(weights[nP]))
-        for i in nodes:
+        for i in sorted(nodes):
             output.write(' '.join(['',str(i)]))
-        output.write('\n')
+        output.write(' \n')
+
+
+def output_time(output,paths,time):
+    
+    output.write(' '.join([str(len(paths)),str(time)]))
+    output.write('\n')
 
 def compute_graph_metadata(graph):
 
@@ -190,50 +196,42 @@ def compute_graph_metadata(graph):
         'max_flow_value': max(ngraph.edges(data='flow'), key=lambda e: e[-1])[-1] if len(ngraph.edges) > 0 else -1,
     }
 
-def solve_instances(graphs,output_file, output_stats=False):
+def solve_instances(graphs,output_file):
 
     output = open(output_file, 'w+')
-    if output_stats:
-        stats = open(f'{output_file}.stats', 'w+')
+    output_simple = open(''.join([output_file,'.time']),'w+')
 
     for g, graph in enumerate(graphs):
-
+        print("#graph ",g)
         output.write(f'# graph {g}\n')
-        if output_stats:
-            stats.write(f'# graph {g}\n')
 
         if not graph['edges']:
             continue
 
         mfd = compute_graph_metadata(graph)
 
-        if output_stats:
-            is_unique_decomposition = True
-
         if len(mfd['graph'].edges) > 0:
 
             mfd = mfd_algorithm(mfd)
-            paths,weights = mfd['solution'],mfd['weights']
+            paths,weights,time = mfd['solution'],mfd['weights'],mfd['runtime']
             output_paths(output,paths,weights)
+            output_time(output_simple,paths,time)
 
 
     output.close()
-    if output_stats:
-        stats.close()
-
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
         description='''
-        Computes paths for Standard Minimum Flow Decomposition.
+        Computes maximal safe paths for Minimum Flow Decomposition.
         This script uses the Gurobi ILP solver.
         ''',
         formatter_class=argparse.RawTextHelpFormatter
     )
+
     parser.add_argument('-t', '--threads', type=int, default=0,
                         help='Number of threads to use for the Gurobi solver; use 0 for all threads (default 0).')
-    
  
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument('-i', '--input', type=str, help='Input filename', required=True)
@@ -245,6 +243,4 @@ if __name__ == '__main__':
     if threads == 0:
         threads = os.cpu_count()
     print(f'INFO: Using {threads} threads for the Gurobi solver')
-
     solve_instances(read_input(args.input),args.output)
-    print("Done")
