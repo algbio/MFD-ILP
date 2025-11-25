@@ -1,4 +1,4 @@
-> [!WARNING]
+> [!IMPORTANT]
 > The flow decomposition models from this repository (for both DAGs and general graphs with cycles) have been further developed and improved, as part of the [flowpaths](https://github.com/algbio/flowpaths) Python package. In particular, flowpaths also supports safety optimizations, which speed up flow decompositions by several magnitudes. Flowpaths also supports the free MILP solver [HiGHS](https://highs.dev), meaning they can be used without a license. See also the [flowpaths documentation](https://algbio.github.io/flowpaths/).
 >
 > This repository remains online for archival purposes.
